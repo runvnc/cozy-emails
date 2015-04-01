@@ -3,7 +3,7 @@ americano = require 'americano'
 log = require('./utils/logging')(prefix: 'config')
 sharedSession = require 'shared-cookie-session'
 
-global.MODEL_MODULE = 'cozydb'
+global.MODEL_MODULE = 'cozy-db-pouchdb'
 
 {errorHandler} = require './utils/errors'
 

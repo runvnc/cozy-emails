@@ -11,7 +11,7 @@ log = require('./utils/logging')({
 
 sharedSession = require('shared-cookie-session');
 
-global.MODEL_MODULE = 'cozydb';
+global.MODEL_MODULE = 'cozy-db-pouchdb';
 
 errorHandler = require('./utils/errors').errorHandler;
 
