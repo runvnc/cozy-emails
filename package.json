@@ -39,6 +39,7 @@
     "sanitize-html": "^1.4.3",
     "sanitizer": "0.1.2",
     "socket.io": "1.1.0",
+    "shared-cookie-session": "",
     "uuid": "^1.4.2",
     "xmldom": "0.1.19"
   },
