@@ -1,6 +1,7 @@
 path = require 'path'
 americano = require 'americano'
 log = require('./utils/logging')(prefix: 'config')
+sharedSession = require 'shared-cookie-session'
 
 global.MODEL_MODULE = 'cozydb'
 
@@ -20,7 +21,11 @@ config =
 
         afterStart: (app, server) ->
             # move it here needed after express 4.4
+            sharedSession.setupAppServer app
             app.use errorHandler
+            app.use (req, res, next) ->
+                if not req.session?.user?
+                    req.redirect req.protocol+'://'+req.get('host') + '/login'
             SocketHandler = require './utils/socket_handler'
             SocketHandler.setup app, server
             Account = require './models/account'
