@@ -2,6 +2,8 @@ path = require 'path'
 americano = require 'americano'
 log = require('./utils/logging')(prefix: 'config')
 
+global.MODEL_MODULE = 'cozydb'
+
 {errorHandler} = require './utils/errors'
 
 config =
@@ -36,5 +38,9 @@ config =
     plugins: [
         MODEL_MODULE
     ]
+
+require MODEL_MODULE
+#config.plugins = [ 'americano-cozy-pouchdb-multi', 'multi-emails' ]
+#require('multi-emails')
 
 module.exports = config
