@@ -20,6 +20,8 @@ module.exports.main = (req, res, next) ->
         refreshes = ImapReporter.summary()
 
         if err
+            console.log err
+            console.trace()
             log.error err.stack
 
             imports = """

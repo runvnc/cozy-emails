@@ -24,18 +24,22 @@ config = {
     use: [
       americano.bodyParser(), americano.methodOverride(), americano["static"](__dirname + '/../client/public', {
         maxAge: 86400000
+      }), sharedSession.cookieSession, sharedSession.processSession, (function(req, res, next) {
+        var ref;
+        console.log(req.session);
+        if (((ref = req.session) != null ? ref.user : void 0) == null) {
+          res.end("Please log in first.");
+          return log.info("redir to login");
+        } else {
+          log.info('user=' + req.session.user);
+          console.log('user=', req.session.user);
+          return next();
+        }
       })
     ],
     afterStart: function(app, server) {
       var Account, SocketHandler;
-      sharedSession.setupAppServer(app);
       app.use(errorHandler);
-      app.use(function(req, res, next) {
-        var ref;
-        if (((ref = req.session) != null ? ref.user : void 0) == null) {
-          return req.redirect(req.protocol + '://' + req.get('host') + '/login');
-        }
-      });
       SocketHandler = require('./utils/socket_handler');
       SocketHandler.setup(app, server);
       Account = require('./models/account');

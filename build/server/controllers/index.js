@@ -26,6 +26,8 @@ module.exports.main = function(req, res, next) {
     var accounts, contacts, imports, locale, refreshes, settings;
     refreshes = ImapReporter.summary();
     if (err) {
+      console.log(err);
+      console.trace();
       log.error(err.stack);
       imports = "console.log(\"" + err + "\");\nwindow.locale = \"en\"\nwindow.refreshes = []\nwindow.accounts  = []\nwindow.contacts  = []";
     } else {

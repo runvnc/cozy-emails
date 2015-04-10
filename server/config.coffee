@@ -17,15 +17,22 @@ config =
             americano.methodOverride()
             americano.static __dirname + '/../client/public',
                 maxAge: 86400000
+            sharedSession.cookieSession
+            sharedSession.processSession
+            ((req, res, next) ->
+                 console.log req.session
+                 if not req.session?.user?
+                     res.end "Please log in first."
+                     log.info "redir to login"
+                 else
+                     log.info 'user='+req.session.user
+                     console.log 'user=', req.session.user
+                     next() 
+            )
         ]
 
         afterStart: (app, server) ->
-            # move it here needed after express 4.4
-            sharedSession.setupAppServer app
             app.use errorHandler
-            app.use (req, res, next) ->
-                if not req.session?.user?
-                    req.redirect req.protocol+'://'+req.get('host') + '/login'
             SocketHandler = require './utils/socket_handler'
             SocketHandler.setup app, server
             Account = require './models/account'
